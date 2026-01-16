@@ -122,18 +122,24 @@ let animationId = null;
 
 const colors = ['#EF4444', '#3B82F6', '#10B981', '#F59E0B', '#8B5CF6', '#EC4899'];
 
+const getRandom = () => {
+  const array = new Uint32Array(1);
+  crypto.getRandomValues(array);
+  return array[0] / (0xffffffff + 1);
+};
+
 const createParticle = (x, y, angle, velocity) => {
   const radian = angle * (Math.PI / 180);
   return {
-    id: Math.random(),
+    id: getRandom(),
     x,
     y,
-    vx: Math.cos(radian) * velocity * (Math.random() * 0.5 + 0.8), // slight variation
-    vy: Math.sin(radian) * velocity * (Math.random() * 0.5 + 0.8),
-    size: Math.random() * 6 + 4,
-    color: colors[Math.floor(Math.random() * colors.length)],
-    rotation: Math.random() * 360,
-    rotationSpeed: (Math.random() - 0.5) * 10,
+    vx: Math.cos(radian) * velocity * (getRandom() * 0.5 + 0.8), // slight variation
+    vy: Math.sin(radian) * velocity * (getRandom() * 0.5 + 0.8),
+    size: getRandom() * 6 + 4,
+    color: colors[Math.floor(getRandom() * colors.length)],
+    rotation: getRandom() * 360,
+    rotationSpeed: (getRandom() - 0.5) * 10,
     opacity: 1,
     life: 1
   };
@@ -145,9 +151,9 @@ const triggerBurst = () => {
     
     for (let i = 0; i < 100; i++) {
         // Left corner
-        particles.value.push(createParticle(0, height, -60 + (Math.random() - 0.5) * 60, Math.random() * 25 + 15));
+        particles.value.push(createParticle(0, height, -60 + (getRandom() - 0.5) * 60, getRandom() * 25 + 15));
         // Right corner
-        particles.value.push(createParticle(width, height, -120 + (Math.random() - 0.5) * 60, Math.random() * 25 + 15));
+        particles.value.push(createParticle(width, height, -120 + (getRandom() - 0.5) * 60, getRandom() * 25 + 15));
     }
 };
 
